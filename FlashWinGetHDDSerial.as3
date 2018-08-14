@@ -1,0 +1,35 @@
+import flash.display.Sprite;
+import flash.desktop.NativeProcess;
+import flash.desktop.NativeProcessStartupInfo;
+import flash.events.Event;
+import flash.events.ProgressEvent;
+import flash.events.IOErrorEvent;
+import flash.events.NativeProcessExitEvent;
+import flash.filesystem.File;
+import flash.filesystem.FileMode;
+import flash.filesystem.FileStream;
+import passwordmovie;
+import flash.desktop.NativeApplication
+
+// run windows cmd to get "vol c:" piped into string;
+
+var nativeProcessStartupInfo:NativeProcessStartupInfo = new NativeProcessStartupInfo(); 
+var file:File = File.applicationDirectory.resolvePath("C:\\Windows\\System32\\cmd.exe"); 
+nativeProcessStartupInfo.executable = file; 
+var processArgs:Vector.<String> = new Vector.<String>(); 
+processArgs.push("/C vol c:");
+nativeProcessStartupInfo.arguments = processArgs; 
+var process = new NativeProcess(); 
+process.addEventListener(ProgressEvent.STANDARD_OUTPUT_DATA, onOutputData); 
+process.start(nativeProcessStartupInfo);
+var tempstring :String;
+
+stop();
+
+function onOutputData(event:ProgressEvent):void 
+{ 
+    //trace("Got: ", NativeProcess(event.target).standardOutput.readUTFBytes(process.standardOutput.bytesAvailable)); 
+	tempstring=NativeProcess(event.target).standardOutput.readUTFBytes(process.standardOutput.bytesAvailable);
+	var arry = (tempstring).split(" ");
+	tempstring=arry[arry.length-1];// volume serial number xp,win95,win7 , maybe 8 , definitely 10
+}
