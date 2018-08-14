@@ -8,7 +8,6 @@ import flash.events.NativeProcessExitEvent;
 import flash.filesystem.File;
 import flash.filesystem.FileMode;
 import flash.filesystem.FileStream;
-import passwordmovie;
 import flash.desktop.NativeApplication
 
 // run windows cmd to get "vol c:" piped into string;
